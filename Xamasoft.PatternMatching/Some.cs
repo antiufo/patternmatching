@@ -41,5 +41,15 @@ namespace Xamasoft.Functional
         }
 
 
+
+        public bool IsNone
+        {
+            get
+            {
+                return !hasValue;
+            }
+        }
+
+
     }
 }
