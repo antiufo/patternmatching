@@ -40,6 +40,15 @@ namespace Xamasoft
                 return new PatternMatching<T, TResult>(() => new PatternMatching<T, TResult>.Match() { OriginalValue = val });
             }
         }
+
+
+
+        public class MatchFailureException : Exception
+        {
+            public MatchFailureException(string message)
+                : base(message)
+            { }
+        }
     }
 
     public struct PatternMatching<T, TResult>
@@ -105,14 +114,7 @@ namespace Xamasoft
             var ret = _f();
             if (ret.Success)
                 return ret.Value;
-            throw new MatchFailureException(String.Format("Failed to match: {0}", ret.Value.GetType()));
+            throw new PatternMatching.MatchFailureException(String.Format("Failed to match: {0}", ret.Value.GetType()));
         }
-    }
-
-    public class MatchFailureException : Exception
-    {
-        public MatchFailureException(string message)
-            : base(message)
-        { }
     }
 }
