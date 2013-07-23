@@ -120,3 +120,5 @@ App_Data/*.ldf
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
+
+VersionInfo.generated.cs
