@@ -15,33 +15,32 @@
 
 using System;
 using System.Collections.Generic;
-using Xamasoft.Functional;
 
 namespace Xamasoft
 {
-    public static class ActivePatterns
+    public static partial class PatternMatching
     {
-        public static PatternMatching<Tuple<T1, T2>> Tuple<T1, T2, TRet>(this PatternMatching<Tuple<T1, T2>> x, Func<T1, T2, TRet> action)
+        public static PatternMatching<Tuple<T1, T2>, TRet> Tuple<T1, T2, TRet>(this PatternMatching<Tuple<T1, T2>, TRet> x, Func<T1, T2, TRet> action)
         {
             return x.With<Tuple<T1, T2>>(pair => action(pair.Item1, pair.Item2));
         }
 
-        public static PatternMatching<Tuple<T1, T2, T3>> Tuple<T1, T2, T3, TRet>(this PatternMatching<Tuple<T1, T2, T3>> x, Func<T1, T2, T3, TRet> action)
+        public static PatternMatching<Tuple<T1, T2, T3>, TRet> Tuple<T1, T2, T3, TRet>(this PatternMatching<Tuple<T1, T2, T3>, TRet> x, Func<T1, T2, T3, TRet> action)
         {
             return x.With<Tuple<T1, T2, T3>>(pair => action(pair.Item1, pair.Item2, pair.Item3));
         }
 
-        public static PatternMatching<Maybe<T>> Some<T>(this PatternMatching<Maybe<T>> x, Func<T, object> f)
+        public static PatternMatching<Maybe<T>, TRet> Some<T, TRet>(this PatternMatching<Maybe<T>, TRet> x, Func<T, TRet> f)
         {
             return x.With<Maybe<T>>(b => b.HasValue, b => f(Value(b)));
         }
 
-        public static PatternMatching<Maybe<T>> Some<T>(this PatternMatching<Maybe<T>> x, T expected, Func<object> f)
+        public static PatternMatching<Maybe<T>, TRet> Some<T, TRet>(this PatternMatching<Maybe<T>, TRet> x, T expected, Func<TRet> f)
         {
             return x.With<Maybe<T>>(b => b.HasValue && Value(b).Equals(expected), _ => f());
         }
 
-        public static PatternMatching<Maybe<T>> None<T>(this PatternMatching<Maybe<T>> x, Func<object> f)
+        public static PatternMatching<Maybe<T>, TRet> None<T, TRet>(this PatternMatching<Maybe<T>, TRet> x, Func<TRet> f)
         {
             return x.With<Maybe<T>>(b => b.IsNone, b => f());
         }
@@ -51,12 +50,12 @@ namespace Xamasoft
             return b.Value;
         }
 
-        public static PatternMatching<T> Value<T>(this PatternMatching<T> x, T expected, Func<object> f)
+        public static PatternMatching<T, TRet> Value<T, TRet>(this PatternMatching<T, TRet> x, T expected, Func<TRet> f)
         {
             return x.With<T>(b => Equals(expected, b), b => f());
         }
 
-        public static PatternMatching<IEnumerable<T>> List<T>(this PatternMatching<IEnumerable<T>> x, Func<T, IEnumerable<T>, object> f)
+        public static PatternMatching<IEnumerable<T>, TRet> List<T, TRet>(this PatternMatching<IEnumerable<T>, TRet> x, Func<T, IEnumerable<T>, TRet> f)
         {
             var head = default(T);
             IEnumerator<T> enumerator = null;

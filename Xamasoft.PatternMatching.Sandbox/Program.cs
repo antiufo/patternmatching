@@ -14,7 +14,12 @@ namespace Xamasoft.Functional.Sandbox
         static void Main(string[] args)
         {
 
+
             Expression<Func<int, int>> expr = x => x + 1;
+
+            var tupl = Tuple.Create("hey", 5);
+            //PatternMatchingExtensions.Match(expr)
+                
 
             //var str = PatternMatching.Match<Expression, int, string>(expr, 1)
             //    .With<LambdaExpression, int>((lambda, num) => lambda.Parameters.Take(num).ToString(), (lambda, num) => num > 0)
