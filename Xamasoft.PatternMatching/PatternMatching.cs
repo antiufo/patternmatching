@@ -146,9 +146,13 @@ namespace Xamasoft
 
         public class MatchFailureException : Exception
         {
-            public MatchFailureException(string message)
+            public MatchFailureException(string message, object unmatchedObject)
                 : base(message)
-            { }
+            {
+                this.UnmatchedObject = unmatchedObject;
+            }
+
+            public object UnmatchedObject { get; private set; }
         }
 
     }
@@ -297,7 +301,7 @@ namespace Xamasoft
             var ret = _f();
             if (ret.Success)
                 return ret.Value;
-            throw new PatternMatching.MatchFailureException(String.Format("Failed to match: {0}", ret.Value.GetType()));
+            throw new PatternMatching.MatchFailureException(String.Format("Failed to match: {0}", ret.OriginalValue.GetType()), ret.OriginalValue);
         }
 
         public TResult ReturnOrDefault()
