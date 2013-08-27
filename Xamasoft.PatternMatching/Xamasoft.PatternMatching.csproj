@@ -39,6 +39,7 @@
     <Compile Include="ActivePatterns.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Either.cs" />
     <Compile Include="PatternMatching.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Maybe.cs" />
